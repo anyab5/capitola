@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
 const LAYERS = [
-  { name: 'Layer 1', amount: '40000', description: 'The external security webcams', carrierId: '637f51583243f8575b93e77e' },
-  { name: 'Layer 2', amount: '80000', description: 'The most guarded wolt area' }
+  { name: 'Layer 1', amount: '40000', description: 'The external security webcams' },
+  { name: 'Layer 2', amount: '80000', description: 'The most guarded walt area' }
 ];
 const TOWERS = [
   { name: 'Burj Khalifa', userId: '638497fb2c8f906b6e954487', description: 'Lorem Ipsum 1', layers: LAYERS },
