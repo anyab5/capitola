@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useGetCarriers, useGetTower } from "../../hooks/useApiRequest";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout";
@@ -5,23 +6,40 @@ import { Typography } from "@mui/material";
 import Date from "../../components/date";
 import LayerCard from "../../components/layer-card";
 
+function splitLayersAndRemoveAssignedCarriers(tower, carriers) {
+  if (!tower || !tower.layers || !carriers) {
+    return {};
+  }
+  const carrierMap = new Map(carriers.map((carrier) => [carrier._id, carrier]));
+  let layers = { assigned: [], unassigned: [] };
+  tower.layers.forEach((layer) => {
+    if (layer.carrierId) {
+      layer.carrier = carrierMap.get(layer.carrierId);
+      layers.assigned.push(layer);
+      carrierMap.delete(layer.carrierId);
+    } else {
+      layers.unassigned.push(layer);
+    }
+  });
+  const unassignedCarriers = carriers.filter((carrier) =>
+    carrierMap.get(carrier._id)
+  );
+  return { layers, unassignedCarriers };
+}
+
 export default function TowerPage() {
-  const { carriers } = useGetCarriers();
   const router = useRouter();
-
   let towerId = router.query?.id;
-  const { tower } = useGetTower(towerId);
 
-  if (!tower || !tower.layers) {
+  const { carriers } = useGetCarriers();
+  const { tower } = useGetTower(towerId);
+  const { layers, unassignedCarriers } = React.useMemo(
+    () => splitLayersAndRemoveAssignedCarriers(tower, carriers),
+    [tower, carriers]
+  );
+  if (!tower || !tower.layers || !carriers) {
     return <div>Loading...</div>;
   }
-
-  let layers = { assigned: [], unassigned: [] };
-  tower.layers.forEach((layer) =>
-    layer.carrierId
-      ? layers.assigned.push(layer)
-      : layers.unassigned.push(layer)
-  );
 
   return (
     <Layout>
@@ -32,30 +50,30 @@ export default function TowerPage() {
         <Date dateString={tower.date} />
       </Typography>
       <Typography variant="body2">{tower.description}</Typography>
-      {layers.unassigned.length ? (
+      {layers.unassigned.length > 0 && (
         <Typography variant="h6" component="div" marginTop="50px">
           Unassigned layers
         </Typography>
-      ) : null}
+      )}
       {layers.unassigned.map((layer) => (
         <LayerCard
           key={layer._id}
           towerId={towerId}
           layer={layer}
-          carriers={carriers}
+          carriers={unassignedCarriers}
         />
       ))}
-      {layers.assigned.length ? (
+      {layers.assigned.length > 0 && (
         <Typography variant="h6" component="div" marginTop="50px">
           Assigned layers
         </Typography>
-      ) : null}
+      )}
       {layers.assigned.map((layer) => (
         <LayerCard
           key={layer._id}
           towerId={towerId}
           layer={layer}
-          carriers={carriers}
+          carriers={unassignedCarriers}
         />
       ))}
     </Layout>

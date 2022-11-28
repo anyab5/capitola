@@ -11,10 +11,6 @@ import { useSWRConfig } from "swr";
 import ListDialog from "./list-dialog";
 import { Add } from "@mui/icons-material";
 
-//TODO: map carrier to list item
-//todo: show carrier name when assigned
-//todo: if already used do not show in the list
-
 export default function LayerCard({ towerId, layer, carriers }) {
   const { name, description, amount } = layer;
   const { mutate } = useSWRConfig();
@@ -34,6 +30,7 @@ export default function LayerCard({ towerId, layer, carriers }) {
     await mutate(`tower/${towerId}`, updateCarrierForLayer(towerId, layer));
   };
 
+  const isAssigned = layer.carrierId;
   return (
     <>
       <Card sx={{ minWidth: 275, my: 3 }}>
@@ -44,16 +41,23 @@ export default function LayerCard({ towerId, layer, carriers }) {
           <Typography variant="body2" gutterBottom>
             {description}
           </Typography>
-          <Typography color="text.secondary">Insured cost: {amount}</Typography>
+          <Typography color="text.secondary" gutterBottom>
+            Insured cost: {amount}
+          </Typography>
+          {isAssigned && (
+            <Typography color="text.secondary">
+              Carrier: {layer?.carrier?.name}
+            </Typography>
+          )}
         </CardContent>
         <CardActions>
           <Button
             size="small"
             onClick={() =>
-              layer.carrierId ? updateLayerAssignment({}) : handleOpenDialog()
+              isAssigned ? updateLayerAssignment({}) : handleOpenDialog()
             }
           >
-            {!layer.carrierId ? "Assign" : "Release"}
+            {isAssigned ? "Release" : "Assign"}
           </Button>
         </CardActions>
       </Card>
