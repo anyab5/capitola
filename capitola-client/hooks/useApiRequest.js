@@ -1,4 +1,6 @@
 import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
+
 import { get } from "../services/http-client";
 
 export const useGetUserTowers = () => {
@@ -12,11 +14,14 @@ export const useGetUser = () => {
 };
 
 export const useGetTower = (policyId) => {
-  const { data, error } = useSWR(`tower/${policyId}`, get);
+  const { data, error } = useSWR(
+    () => (policyId ? `tower/${policyId}` : null),
+    get
+  );
   return { tower: data, error };
 };
 
 export const useGetCarriers = () => {
-  const { data, error } = useSWR(`carrier/get-all`, get);
+  const { data, error } = useSWRImmutable(`carrier/get-all`, get);
   return { carriers: data, error };
 };

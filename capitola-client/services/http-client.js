@@ -1,6 +1,4 @@
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
-console.log("API_HOST +++++++++++++++++++");
-console.log(API_HOST);
 export const get = async (url) => {
   try {
     const response = await fetch(`${API_HOST}/${url}`);

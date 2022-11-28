@@ -40,7 +40,7 @@ export default function TowerPage() {
     [tower, carriers]
   );
   if (!tower || !tower.layers || !carriers) {
-    return <LoadingIndicator />;
+    return <LoadingIndicator/>
   }
 
   return (
