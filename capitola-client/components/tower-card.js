@@ -4,7 +4,7 @@ import Date from "./date";
 
 export default function TowerCard({ tower }) {
   const { name, description, date, _id } = tower;
-  const route = `/policy/${_id}`;
+  const route = `/tower/${_id}`;
   return (
     <Link href={route}>
       <Card sx={{ minWidth: 275, my: 3 }}>

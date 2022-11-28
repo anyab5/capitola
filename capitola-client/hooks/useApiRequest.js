@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import {get, post, patch} from "../services/http-client";
+import {get, post} from "../services/http-client";
 
 
 export const useGetUserTowers = () => {
@@ -13,9 +13,6 @@ export const useGetUser = () => {
 };
 
 export const useGetTower = (policyId) => {
-    if (!policyId){
-        return {};
-    }
     const {data, error} = useSWR(`tower/${policyId}`, get);
     console.log(data);
     return {tower: data, error};
