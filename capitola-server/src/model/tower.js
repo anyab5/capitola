@@ -24,5 +24,5 @@ towerSchema.statics.updateLayer = function (towerId, layerData) {
   };
   return this.findOneAndUpdate(query, { $set: update  }, { new: true });
 };
-//,,
+
 module.exports = mongoose.model('Tower', towerSchema);

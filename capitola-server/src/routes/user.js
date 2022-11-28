@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
+const mongoose = require('mongoose');
 const User = require('../model/user');
 
+const USER = { _id: mongoose.Types.ObjectId('638497fb2c8f906b6e954487'), name: 'Ethan Hunt', email: 'ethan@hunt.com' };
+
 router.get('/', async function (req, res) {
-  //should get here the userId from the auth data
-  const userId = '45';
+  // If we have auth in place we should have the user id from the auth flow
+  const userId = '638497fb2c8f906b6e954487';
   let user = await User.findById(userId);
   if (!user){
-    let newVar = { _id: userId, name: 'Ethan Hunt', email: 'ethan@hunt.com' };
-    user = await new User(newVar).save();
+    //this is done only to make life easier for tester
+    user = await new User(USER).save();
   }
-  console.log(user);
   res.status(200).json(user);
 });
 
