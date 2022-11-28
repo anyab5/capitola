@@ -13,8 +13,6 @@ const CARRIERS = [
 ];
 
 router.get('/get-all', async function (req, res) {
-  console.log("get all carriers");
-
   // I assume that in real life the carriers should somehow be relevant to specific brokers,
   // so we will not really be fetching them without any condition.
   // For now, to avoid pagination I decided to simply limit

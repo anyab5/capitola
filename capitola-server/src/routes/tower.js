@@ -16,7 +16,6 @@ const TOWERS = [
 router.get('/get-user-towers', async function (req, res) {
   // If we have auth in place we should have the user id from the auth flow
   const userId = '638497fb2c8f906b6e954487';
-  console.log('I am here get user towers');
   let towers = await Tower.find({ userId: userId }, { layers: false });
 
   if (!towers || !towers.length) {
@@ -30,7 +29,6 @@ router.get('/:id', async function (req, res) {
   if (!req.params.id || req.params.id === 'undefined') {
     return res.status(404).json({});
   }
-  console.log('I am here get tower');
   const tower = await Tower.findById(req.params.id);
   res.status(200).json(tower);
 });
