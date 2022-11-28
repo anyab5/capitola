@@ -6,7 +6,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { addCarrierToLayer } from "../hooks/useApiRequest";
+import { updateCarrierForLayer } from "../services/api-client";
 import { useSWRConfig } from "swr";
 import ListDialog from "./list-dialog";
 import { Add } from "@mui/icons-material";
@@ -30,7 +30,8 @@ export default function LayerCard({ towerId, layer, carriers }) {
 
   const updateLayerAssignment = async (carrier) => {
     layer.carrierId = carrier._id;
-    await mutate(`tower/${towerId}`, addCarrierToLayer(towerId, layer));
+    //const options = { optimisticData: user, rollbackOnError: true }
+    await mutate(`tower/${towerId}`, updateCarrierForLayer(towerId, layer));
   };
 
   return (
@@ -62,7 +63,7 @@ export default function LayerCard({ towerId, layer, carriers }) {
         open={open}
         onClose={handleCloseDialog}
         onSelect={updateLayerAssignment}
-        actionIcon={()=><Add/>}
+        actionIcon={() => <Add />}
       ></ListDialog>
     </>
   );

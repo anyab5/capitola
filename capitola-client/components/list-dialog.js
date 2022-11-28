@@ -12,7 +12,14 @@ import {
   IconButton,
 } from "@mui/material";
 
-export default function ListDialog({ title, items, onSelect, open, onClose, actionIcon: ActionIcon }) {
+export default function ListDialog({
+  title,
+  items,
+  onSelect,
+  open,
+  onClose,
+  actionIcon: ActionIcon,
+}) {
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose}>
       <DialogTitle>{title}</DialogTitle>
@@ -26,8 +33,8 @@ export default function ListDialog({ title, items, onSelect, open, onClose, acti
                 <ListItem
                   alignItems="flex-start"
                   secondaryAction={
-                    <IconButton onClick={()=>onSelect(item)}>
-                        <ActionIcon/>
+                    <IconButton onClick={() => onSelect(item)}>
+                      <ActionIcon />
                     </IconButton>
                   }
                 >

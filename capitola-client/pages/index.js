@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 import Layout from "../components/layout";
 
 export default function Home() {
-  const { data: towers } = useGetUserTowers();
+  const { towers } = useGetUserTowers();
   const { user } = useGetUser();
 
   // if (error) return <h1>Something went wrong!</h1>;

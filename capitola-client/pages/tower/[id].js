@@ -1,4 +1,4 @@
-import {useGetCarriers, useGetTower} from "../../hooks/useApiRequest";
+import { useGetCarriers, useGetTower } from "../../hooks/useApiRequest";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout";
 import { Typography } from "@mui/material";
@@ -6,11 +6,11 @@ import Date from "../../components/date";
 import LayerCard from "../../components/layer-card";
 
 export default function TowerPage() {
-    const { carriers } = useGetCarriers();
-    const router = useRouter();
+  const { carriers } = useGetCarriers();
+  const router = useRouter();
 
   let towerId = router.query?.id;
-    const { tower } = useGetTower(towerId);
+  const { tower } = useGetTower(towerId);
 
   if (!tower || !tower.layers) {
     return <div>Loading...</div>;
@@ -38,7 +38,12 @@ export default function TowerPage() {
         </Typography>
       ) : null}
       {layers.unassigned.map((layer) => (
-        <LayerCard key={layer._id} towerId={towerId}  layer={layer} carriers={carriers}/>
+        <LayerCard
+          key={layer._id}
+          towerId={towerId}
+          layer={layer}
+          carriers={carriers}
+        />
       ))}
       {layers.assigned.length ? (
         <Typography variant="h6" component="div" marginTop="50px">
@@ -46,7 +51,12 @@ export default function TowerPage() {
         </Typography>
       ) : null}
       {layers.assigned.map((layer) => (
-        <LayerCard key={layer._id} towerId={towerId} layer={layer} carriers={carriers}/>
+        <LayerCard
+          key={layer._id}
+          towerId={towerId}
+          layer={layer}
+          carriers={carriers}
+        />
       ))}
     </Layout>
   );
