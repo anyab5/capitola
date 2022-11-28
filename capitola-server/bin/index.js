@@ -3,9 +3,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const tower = require('./routes/tower');
-const user = require('./routes/user');
-const carrier = require('./routes/carrier');
+const tower = require('../src/routes/tower');
+const user = require('../src/routes/user');
+const carrier = require('../src/routes/carrier');
 
 const port = 3001;
 const app = express();

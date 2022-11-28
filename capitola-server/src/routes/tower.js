@@ -28,18 +28,17 @@ router.get('/get-user-towers', async function (req, res) {
 });
 
 router.get('/:id', async function (req, res) {
-  if (!req.params.id){
-    res.status(200).json({})
+  if (!req.params.id || req.params.id === "undefined"){
+    return res.status(404).json({})
   }
   console.log('I am here get tower');
   const tower = await Tower.findById(req.params.id);
   res.status(200).json(tower);
 });
-//
+//,
 router.post('/:towerId/update-layer', async function (req, res) {
   const body = req.body;
   console.log('I am here post tower', body);
-  body.carrierId = body.carrierId ? null : '637f51583243f8575b93e77e';
   const tower = await Tower.updateLayer(req.params.towerId, body);
   console.log(tower);
   res.status(200).json(tower);
