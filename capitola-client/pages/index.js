@@ -5,10 +5,16 @@ import { Box, Typography } from "@mui/material";
 
 import Layout from "../components/layout";
 import LoadingIndicator from "../components/loading-indicator";
+import Error from "../components/error";
 
 export default function Home() {
-  const { towers } = useGetUserTowers();
-  const { user } = useGetUser();
+  const { towers, error: towerError } = useGetUserTowers();
+  const { user, error: userError } = useGetUser();
+
+  if (towerError || userError){
+    return <Error/>;
+  }
+
   if (!towers || !user){
     return <LoadingIndicator/>;
   }

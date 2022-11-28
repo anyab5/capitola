@@ -41,11 +41,11 @@ export default function LayerCard({ towerId, layer, carriers }) {
           <Typography variant="body2" gutterBottom>
             {description}
           </Typography>
-          <Typography color="text.secondary" gutterBottom>
+          <Typography color="text.secondary">
             Insured cost: {amount}
           </Typography>
           {isAssigned && (
-            <Typography color="text.secondary">
+            <Typography variant="subtitle1" mt="15px">
               Carrier: {layer?.carrier?.name}
             </Typography>
           )}

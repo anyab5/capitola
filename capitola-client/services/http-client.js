@@ -1,14 +1,23 @@
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+
+const extractApiError = async (res) => {
+  const error = new Error("An api error occurred while fetching the data.");
+  error.info = await res.json();
+  error.status = res.status;
+  console.log(error.status);
+  throw error;
+};
+
 export const get = async (url) => {
   try {
     const response = await fetch(`${API_HOST}/${url}`);
-    if (!/^2/.test(`${response.status}`)) {
-      return Promise.reject({ success: false, status: response.status });
+    if (!response.ok) {
+      return extractApiError(response);
     }
     return response.json();
   } catch (err) {
     console.log(err);
-    return Promise.reject(err);
+    throw err;
   }
 };
 
@@ -21,14 +30,13 @@ const crudType = async (method, path, payload) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(response);
-    if (!/^2/.test(`${response.status}`)) {
-      return Promise.reject({ success: false, status: response.status });
+    if (!response.ok) {
+      return extractApiError(response);
     }
     return response.json();
   } catch (err) {
     console.log(err);
-    return Promise.reject(err);
+    throw err;
   }
 };
 

@@ -7,6 +7,7 @@ import Date from "../../components/date";
 import LayerCard from "../../components/layer-card";
 import Link from "next/link";
 import LoadingIndicator from "../../components/loading-indicator";
+import Error from "../../components/error";
 
 function splitLayersAndRemoveAssignedCarriers(tower, carriers) {
   if (!tower || !tower.layers || !carriers) {
@@ -33,8 +34,13 @@ export default function TowerPage() {
   const router = useRouter();
   let towerId = router.query?.id;
 
-  const { carriers } = useGetCarriers();
-  const { tower } = useGetTower(towerId);
+  const { carriers, error: carriersError } = useGetCarriers();
+  const { tower, error: towerError } = useGetTower(towerId);
+
+  if (towerError || carriersError){
+    return <Error/>;
+  }
+
   const { layers, unassignedCarriers } = React.useMemo(
     () => splitLayersAndRemoveAssignedCarriers(tower, carriers),
     [tower, carriers]
