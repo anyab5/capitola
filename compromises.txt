@@ -1,0 +1,10 @@
+* List of things that are not happening
+    - No authentication and authorization
+    - console.log instead of log library
+    - Writing to res in the routes, not handling in more graceful way
+
+* List of things that can happen better
+    - Better Error handling
+    - Handling possible long list for carriers with pagination / search
+    - Probably more coherent styling handling
+
