@@ -2,9 +2,11 @@ import * as React from "react";
 import { useGetCarriers, useGetTower } from "../../hooks/useApiRequest";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout";
-import { Typography } from "@mui/material";
+import { Breadcrumbs, Typography } from "@mui/material";
 import Date from "../../components/date";
 import LayerCard from "../../components/layer-card";
+import Link from "next/link";
+import LoadingIndicator from "../../components/loading-indicator";
 
 function splitLayersAndRemoveAssignedCarriers(tower, carriers) {
   if (!tower || !tower.layers || !carriers) {
@@ -38,15 +40,21 @@ export default function TowerPage() {
     [tower, carriers]
   );
   if (!tower || !tower.layers || !carriers) {
-    return <div>Loading...</div>;
+    return <LoadingIndicator />;
   }
 
   return (
     <Layout>
+      <Breadcrumbs aria-label="breadcrumb" mb="20px">
+        <Link underline="hover" color="inherit" href="/">
+          Homepage
+        </Link>
+        <Typography color="text.primary">Tower Page</Typography>
+      </Breadcrumbs>
       <Typography variant="h2" component="div">
         {tower.name}
       </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
+      <Typography mb="10px" color="text.secondary">
         <Date dateString={tower.date} />
       </Typography>
       <Typography variant="body2">{tower.description}</Typography>

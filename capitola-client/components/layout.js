@@ -10,7 +10,7 @@ export default function Layout({ children }) {
         width="1750"
         height="200"
       />
-      <Container maxWidth="sm" sx={{ py: 10 }}>
+      <Container maxWidth="sm" sx={{ py: 10, height: "100vh" }}>
         {children}
       </Container>
     </div>
