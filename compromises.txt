@@ -2,6 +2,7 @@
     - No authentication and authorization
     - console.log instead of log library
     - Writing to res in the routes, not handling in more graceful way
+    - There is no CRUD for towers and layers
 
 * List of things that can happen better
     - Better Error handling
